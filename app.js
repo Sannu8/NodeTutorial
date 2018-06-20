@@ -1,15 +1,30 @@
-const path = require('path');
 
-var pathObj = path.parse(__filename);
+const fs = require('fs');
+/*
+const filesarray = fs.readdirSync('./');
+console.log(files); */
 
-//console.log(pathObj);
+fs.readdir('$', (err, filesarray) => {
+    if (err) {
+        // console.log('There is an error: ', err);
+    }
+    //else { console.log('Result: ', filesarray) }
+});
 
-const os = require('os');
+//Register a listener
+//emitter.on('messageLogged', (e) => { console.log('Listener called', e) })
 
-var totalMemory = os.totalmem();
-var freeMemory = os.freemem();
+//Signalling that an event has occured. RAISING AN EVENT
+//emitter.emit('messageLogged', { id: 1, url: 'https://' });
 
-console.log('Total Memory: ' + totalMemory);
+const EventEmitter = require('events');
 
-//Template String ES6 /ES2015
-console.log(`Free Memory: ${freeMemory}`);
+const Logger = require('./logger');
+const logger = new Logger();
+
+//Registering listerner
+logger.on('logging', (e) => {
+    console.log('Listener Called', e);
+});
+
+logger.log('message');
